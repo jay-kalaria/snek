@@ -24,7 +24,69 @@ static void update_head(game_t *game, unsigned int snum);
 /* Task 1 */
 game_t *create_default_game() {
   // TODO: Implement this function.
-  return NULL;
+  game_t* game = malloc(sizeof(game_t));
+  if(!game){
+    return NULL;
+  }
+
+  game -> num_rows = 18;
+  //game -> num_cols = 21;
+  game -> num_snakes = 1;
+  game -> snakes = malloc(game -> num_snakes*sizeof(snake_t));
+  if(!game -> snakes){
+    free(game);
+    return NULL;
+  }
+
+  game -> snakes[0].tail_row = 2;
+  game -> snakes[0].tail_col = 2;
+  game -> snakes[0].head_col = 4;
+  game -> snakes[0].head_row = 2;
+  game -> snakes[0].live = true;
+
+  char* board_draft[] = {"####################\n",
+                        "#                  #\n",
+                        "# d>D    *         #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n", 
+                        "#                  #\n",
+                        "#                  #\n",
+                        "#                  #\n",
+                        "####################\n"};
+
+  char** board = malloc(game->num_rows * sizeof(char*));
+  if(!board){
+    free(game -> snakes);
+    free(game);
+    return NULL;
+  }
+
+  for(int i=0;i<game->num_rows;i++){
+    board[i] = malloc(strlen(board_draft[i])+1);
+    if(!board[i]){
+      for(int j=0;j<i;j++){
+        free(board[j]);
+      }
+      free(board);
+      free(game -> snakes);
+      free(game);
+      return NULL;
+    }
+    strcpy(board[i], board_draft[i]);
+  };
+
+  game->board = board;
+
+  return game;
 }
 
 /* Task 2 */
