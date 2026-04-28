@@ -114,7 +114,7 @@ void print_board(game_t *game, FILE *fp) {
   
   for(unsigned int i = 0; i<game->num_rows;i++){
     //printf("%s", game->board[i]);
-    fprintf(fp,game->board[i]);
+    fprintf(fp,"%s",game->board[i]);
   }
 
   return;
